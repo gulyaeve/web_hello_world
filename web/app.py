@@ -1,14 +1,12 @@
 from fastapi import FastAPI
 
+from web.users.router import router as users_router
+
 app = FastAPI()
+
+app.include_router(users_router)
 
 
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
-
-
-@app.get("/users/{id}")
-def get_user_info(id: int) -> str:
-    # return {"user_id": id, "user_name": "vasya"}
-    return "vasya"
