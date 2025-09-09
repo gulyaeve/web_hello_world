@@ -9,8 +9,9 @@ class User(BaseModel):
     surname: str
     patronymic: Optional[str]
     login: str
-    date_reg: datetime
+    time_created: datetime
     email: Optional[EmailStr]
+    phone: Optional[str]
 
 
 class UserReg(BaseModel):

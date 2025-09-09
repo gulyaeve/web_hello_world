@@ -12,6 +12,6 @@ class Users(Base):
     surname = Column(String, nullable=False)
     patronymic = Column(String)
     login = Column(String, nullable=False)
-    date_reg: Mapped[datetime] = mapped_column(server_default=func.now(), nullable=True)
+    time_created: Mapped[datetime] = mapped_column(server_default=func.now())
     email = Column(String, nullable=False, unique=True)
     phone = Column(String, nullable=True, unique=True)
