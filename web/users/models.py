@@ -1,5 +1,7 @@
 from web.database import Base
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, func
+from sqlalchemy.orm import Mapped, mapped_column
+from datetime import datetime
 
 
 class Users(Base):
@@ -10,6 +12,6 @@ class Users(Base):
     surname = Column(String, nullable=False)
     patronymic = Column(String)
     login = Column(String, nullable=False)
-    date_reg = Column(DateTime, nullable=False)
+    date_reg: Mapped[datetime] = mapped_column(server_default=func.now(), nullable=True)
     email = Column(String, nullable=False, unique=True)
     phone = Column(String, nullable=True, unique=True)

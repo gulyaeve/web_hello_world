@@ -11,3 +11,10 @@ class User(BaseModel):
     login: str
     date_reg: datetime
     email: Optional[EmailStr]
+
+
+class UserReg(BaseModel):
+    email: EmailStr
+    login: str
+    name: str
+    surname: str

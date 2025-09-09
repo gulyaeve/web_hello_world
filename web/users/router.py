@@ -1,7 +1,8 @@
 from datetime import datetime
 from fastapi import APIRouter
 
-from web.users.schemas import User
+from web.users.schemas import User, UserReg
+from web.users.dao import UsersDAO
 
 
 router = APIRouter(
@@ -24,7 +25,8 @@ def get_user_info(id: int) -> User:
     return user_data
 
 
-@router.post("/")
-def register_user(user_data: User) -> User:
+@router.post("/register")
+async def register_user(user_data: UserReg):
+    await UsersDAO.add(**user_data.model_dump())
     print(f"User saved to db: {user_data}")
-    return user_data
+    # return user_data
