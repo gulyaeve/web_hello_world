@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 class User(BaseModel):
-    # id: int
+    id: Optional[int]
     name: str
     surname: str
     patronymic: Optional[str]
