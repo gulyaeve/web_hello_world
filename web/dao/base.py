@@ -1,4 +1,5 @@
 from sqlalchemy import select, insert, delete
+from sqlalchemy.exc import MultipleResultsFound
 
 from web.database import async_session_maker
 
@@ -26,6 +27,8 @@ class BaseDAO:
         async with async_session_maker() as session:
             query = select(cls.model).filter_by(**filter_by)
             result = await session.execute(query)
+            # print(f"{result.scalars().all()=}")
+            # print(f"{result.mappings().all()=}")
             return result.scalars().all()
         
     @classmethod
@@ -33,4 +36,15 @@ class BaseDAO:
         async with async_session_maker() as session:
             query = select(cls.model).filter_by(**filter_by)
             result = await session.execute(query)
-            return result.mappings().one_or_none()
+            return result.scalars().one_or_none()
+
+    @classmethod
+    async def find(cls, **filter_by):
+        async with async_session_maker() as session:
+            query = select(cls.model).filter_by(**filter_by)
+            try:
+                result = await session.execute(query)
+                return result.scalars().one_or_none()
+            except MultipleResultsFound as e:
+                result = await session.execute(query)
+                return result.scalars().all()

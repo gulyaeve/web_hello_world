@@ -4,19 +4,33 @@ from datetime import datetime
 
 
 class User(BaseModel):
-    id: Optional[int]
+    id: int
     name: str
     surname: str
     patronymic: Optional[str]
-    login: str
+    # login: str
     time_created: datetime
     email: Optional[EmailStr]
     phone: Optional[str]
 
 
+class UserSearch(BaseModel):
+    name: str = ""
+    surname: str = ""
+    patronymic: Optional[str] = None
+    # login: str = ""
+    email: Optional[EmailStr] = None
+    phone: Optional[str] = None
+
+
 class UserReg(BaseModel):
     email: EmailStr
-    login: str
+    # login: str
     name: str
     surname: str
+    password: str
+
+
+class UserLogin(BaseModel):
+    email: EmailStr
     password: str

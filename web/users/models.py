@@ -11,7 +11,8 @@ class Users(Base):
     name = Column(String, nullable=False)
     surname = Column(String, nullable=False)
     patronymic = Column(String)
-    login = Column(String, nullable=False)
+    # login = Column(String, nullable=False)
     time_created: Mapped[datetime] = mapped_column(server_default=func.now())
     email = Column(String, nullable=False, unique=True)
     phone = Column(String, nullable=True, unique=True)
+    hashed_password: Mapped[str]

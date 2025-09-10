@@ -12,4 +12,9 @@ class BaseException(HTTPException):
 class UserExistException(BaseException):
     status_code = status.HTTP_409_CONFLICT
     detail = "Пользователь уже зарегистрирован"
+
+
+class IncorrectEmailOrPassword(BaseException):
+    status_code = status.HTTP_401_UNAUTHORIZED
+    detail = "Некорректный email или пароль"
     
