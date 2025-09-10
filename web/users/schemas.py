@@ -19,3 +19,4 @@ class UserReg(BaseModel):
     login: str
     name: str
     surname: str
+    password: str
