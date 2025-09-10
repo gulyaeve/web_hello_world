@@ -1,7 +1,9 @@
 from typing import Sequence, Annotated
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Depends, Query, Response
 
-from web.users.auth import auth_user, get_password_hash
+from web.users.auth import auth_user, get_password_hash, create_token
+from web.users.dependencies import get_current_user
+from web.users.models import Users
 from web.users.schemas import User, UserReg, UserSearch, UserLogin
 from web.users.dao import UsersDAO
 from web.exceptions import UserExistException
@@ -11,11 +13,6 @@ router = APIRouter(
     prefix="/users",
     tags=["Users"],
 )
-
-
-@router.get("/{id}")
-async def get_user_info(id: int) -> User:
-    return await UsersDAO.find_by_id(id)
 
 
 @router.get("")
@@ -53,5 +50,19 @@ async def register_user(user_data: UserReg):
 
 
 @router.post("/login")
-async def login_user(user_data: UserLogin):
+async def login_user(response: Response, user_data: UserLogin):
     user = await auth_user(user_data.email, user_data.password)
+    access_token = create_token({"sub": str(user.id)})
+    response.set_cookie("access_token", access_token)
+    return {"access_token": access_token}
+
+
+@router.get("/me")
+async def user_get_itself(current_user: Users = Depends(get_current_user)) -> User:
+    return current_user
+    
+
+
+@router.get("/{id}")
+async def get_user_info(id: int) -> User:
+    return await UsersDAO.find_by_id(id)

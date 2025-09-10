@@ -1,8 +1,11 @@
 from passlib.context import CryptContext
 from pydantic import EmailStr
+from jose import jwt
+from datetime import datetime, timedelta
 
 from web.users.dao import UsersDAO
 from web.exceptions import IncorrectEmailOrPassword
+from web.settings import settings
 
 
 
@@ -24,6 +27,18 @@ async def auth_user(email: EmailStr, password: str):
     return user
 
 
+def create_token(data: dict) -> str:
+    to_encode = data.copy()
+    expire = datetime.now() + timedelta(minutes=20)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(
+        to_encode,
+        settings.SECRET_KEY,
+        settings.ALGORITHM,
+    )
+    return encoded_jwt
+
+
 
 
 if __name__ == "__main__":
@@ -33,3 +48,4 @@ if __name__ == "__main__":
     # print(verify)
     # from asyncio import run
     # run(auth_user("vasya@example.com", "Start123"))
+    # print(create_token({"test": 1}))

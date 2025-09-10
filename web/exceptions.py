@@ -17,4 +17,18 @@ class UserExistException(BaseException):
 class IncorrectEmailOrPassword(BaseException):
     status_code = status.HTTP_401_UNAUTHORIZED
     detail = "Некорректный email или пароль"
-    
+
+
+class TokenMissing(BaseException):
+    status_code = status.HTTP_401_UNAUTHORIZED
+    detail = "Токен отсутствует"
+
+
+class TokenIncorrect(BaseException):
+    status_code = status.HTTP_401_UNAUTHORIZED
+    detail = "Неверный формат токена"
+
+
+class UserNotPresent(BaseException):
+    status_code = status.HTTP_401_UNAUTHORIZED
+    detail = "Пользователь не найден"
