@@ -1,7 +1,10 @@
 from fastapi import Depends, FastAPI
+from sqladmin import Admin
 
+from web.admin.views import UsersAdmin
 from web.auth.scheme import get_bearer_token
 from web.users.router import router as users_router
+from web.database import engine
 from random import randint
 from time import sleep
 from asyncio import sleep as asleep
@@ -35,3 +38,7 @@ async def test_async(id: int):
     asleep(time_to_wait)
     print(f"Задача {id} завершена" )
     return {"msg": f"Задача {id} завершена за {time_to_wait} секунд"}
+
+
+admin = Admin(app, engine)
+admin.add_view(UsersAdmin)

@@ -3,8 +3,8 @@ from fastapi import APIRouter, Depends, Query, Response
 
 from web.users.auth import auth_user, get_password_hash, create_token
 from web.users.dependencies import get_current_user
-from web.users.models import Users
-from web.users.schemas import User, UserReg, UserSearch, UserLogin
+from web.users.models import UserModel
+from web.users.schemas import UserScheme, UserReg, UserSearch, UserLogin
 from web.users.dao import UsersDAO
 from web.exceptions import UserExistException
 
@@ -16,7 +16,7 @@ router = APIRouter(
 
 
 @router.get("")
-async def get_all_users(filter_query: Annotated[UserSearch, Query()]) -> Sequence[User]:
+async def get_all_users(filter_query: Annotated[UserSearch, Query()]) -> Sequence[UserScheme]:
     """
     Get all users
     """
@@ -58,11 +58,11 @@ async def login_user(response: Response, user_data: UserLogin):
 
 
 @router.get("/me")
-async def user_get_itself(current_user: Users = Depends(get_current_user)) -> User:
+async def user_get_itself(current_user: UserModel = Depends(get_current_user)) -> UserScheme:
     return current_user
     
 
 
 @router.get("/{id}")
-async def get_user_info(id: int) -> User:
+async def get_user_info(id: int) -> UserScheme:
     return await UsersDAO.find_by_id(id)

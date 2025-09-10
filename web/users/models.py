@@ -4,7 +4,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime
 
 
-class Users(Base):
+class UserModel(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
