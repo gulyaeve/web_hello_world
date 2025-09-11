@@ -19,6 +19,14 @@ class Settings(BaseSettings):
 
         return f"postgresql+asyncpg://{user}@{database}"
     
+    # Redis parameters
+    REDIS_HOST: str
+    REDIS_PORT: int
+
+    @property
+    def redis_url(self):
+        return f"redis://{self.RABBITMQ_HOST}:{self.REDIS_PORT}"
+
     # RabbitMQ parameters
     RABBITMQ_HOST: str
     RABBITMQ_PORT: int

@@ -1,6 +1,6 @@
 from web.database import Base
 from sqlalchemy import Column, Integer, String, func
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import datetime
 
 
@@ -16,3 +16,5 @@ class UserModel(Base):
     email = Column(String, nullable=False, unique=True)
     phone = Column(String, nullable=True, unique=True)
     hashed_password: Mapped[str]
+
+    teacher = relationship("CourseLectors", uselist=True, backref="users")

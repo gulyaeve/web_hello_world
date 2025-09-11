@@ -1,3 +1,4 @@
+import time
 from typing import Sequence, Annotated
 from fastapi import APIRouter, Depends, Query, Response
 
@@ -7,6 +8,7 @@ from web.users.models import UserModel
 from web.users.schemas import UserScheme, UserReg, UserSearch, UserLogin
 from web.users.dao import UsersDAO
 from web.exceptions import UserExistException
+from fastapi_cache.decorator import cache
 
 
 router = APIRouter(
@@ -16,10 +18,12 @@ router = APIRouter(
 
 
 @router.get("")
+@cache(expire=60)
 async def get_all_users(filter_query: Annotated[UserSearch, Query()]) -> Sequence[UserScheme]:
     """
     Get all users
     """
+    time.sleep(10)
     filter_model = filter_query.model_dump(exclude_unset=True, exclude_defaults=True)
     return await UsersDAO.find_all(**filter_model)
 

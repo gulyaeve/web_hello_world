@@ -32,3 +32,8 @@ class TokenIncorrect(BaseException):
 class UserNotPresent(BaseException):
     status_code = status.HTTP_401_UNAUTHORIZED
     detail = "Пользователь не найден"
+
+
+class CourseNotPresent(BaseException):
+    status_code = status.HTTP_403_FORBIDDEN
+    detail = "Курс не найден"
