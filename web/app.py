@@ -5,6 +5,7 @@ from web.admin.views import UsersAdmin
 from web.admin.auth import authentication_backend
 from web.auth.scheme import get_bearer_token
 from web.users.router import router as users_router
+from web.images.router import router as images_router
 from web.database import engine
 from random import randint
 from time import sleep
@@ -16,6 +17,7 @@ app = FastAPI()
 
 # app.include_router(users_router, dependencies=SECURITY)
 app.include_router(users_router)
+app.include_router(images_router)
 
 
 @app.get("/")
