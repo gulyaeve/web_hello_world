@@ -10,3 +10,10 @@ services:
     ports:
       - "7777:8000"
     command: ["/app/docker/app.sh"]
+    networks:
+      - default
+
+networks:
+  default:
+    name: bot_network
+    external: true
