@@ -23,4 +23,5 @@ RUN chmod +x /app/docker/*.sh
 
 ENV PATH="/app/.venv/bin:$PATH"
 
-ENTRYPOINT [ "gunicorn", "web.app:app", "--workers", "4", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind=0.0.0.0:8000" ]
+# ENTRYPOINT [ "gunicorn", "web.app:app", "--workers", "4", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind=0.0.0.0:8000" ]
+ENTRYPOINT [ "/app/docker/app.sh" ]
