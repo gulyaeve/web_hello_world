@@ -7,6 +7,7 @@ from fastapi_cache.backends.redis import RedisBackend
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi_versioning import VersionedFastAPI, version
+from prometheus_fastapi_instrumentator import Instrumentator
 from sqladmin import Admin
 
 from web.admin.views import UsersAdmin
@@ -110,7 +111,11 @@ def test_sync(id: int):
     return {"msg": f"Задача {id} завершена за {time_to_wait} секунд"}
 
 
-
+instrumentator = Instrumentator(
+    should_group_status_codes=False,
+    excluded_handlers=[".*admin.*"]
+)
+instrumentator.instrument(app).expose(app)
 
 
 admin = Admin(app, engine, authentication_backend=authentication_backend)
