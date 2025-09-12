@@ -13,6 +13,7 @@ dependencies = [
     "fastapi-versioning>=0.10.0",
     "faststream[rabbit]>=0.5.48",
     "flake8>=7.3.0",
+    "gunicorn>=23.0.0",
     "itsdangerous>=2.2.0",
     "passlib>=1.7.4",
     "pydantic-settings>=2.10.1",
