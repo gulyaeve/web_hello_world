@@ -18,3 +18,6 @@ class UserModel(Base):
     hashed_password: Mapped[str]
 
     teacher = relationship("CourseLectors", uselist=True, backref="users")
+
+    def __repr__(self):
+        return f"UserModel(id={self.id!r}, name={self.name!r}, surname={self.surname!r})"

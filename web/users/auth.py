@@ -1,3 +1,4 @@
+import logging
 from passlib.context import CryptContext
 from pydantic import EmailStr
 from jose import jwt
@@ -23,6 +24,7 @@ def verify_password(password: str, hashed_password: str) -> bool:
 async def auth_user(email: EmailStr, password: str):
     user = await UsersDAO.find_one(email=email)
     if not (user and verify_password(password, user.hashed_password)):
+        logging.warning(f"Wrong Email or Password for user {user}")
         raise IncorrectEmailOrPassword
     return user
 

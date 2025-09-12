@@ -1,5 +1,7 @@
+import logging
+
 from contextlib import asynccontextmanager
-from fastapi import Depends, FastAPI
+from fastapi import FastAPI
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 from fastapi.middleware.cors import CORSMiddleware
@@ -7,7 +9,6 @@ from sqladmin import Admin
 
 from web.admin.views import UsersAdmin
 from web.admin.auth import authentication_backend
-from web.auth.scheme import get_bearer_token
 from web.users.router import router as users_router
 from web.courses.router import router as courses_router
 from web.images.router import router as images_router
@@ -18,6 +19,9 @@ from random import randint
 from time import sleep
 from asyncio import sleep as asleep
 from redis import asyncio as aioredis
+
+
+logging.basicConfig(level=logging.INFO)
 
 
 @asynccontextmanager
@@ -55,6 +59,7 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
+    logging.info("Exectuted /")
     return {"Hello": "World"}
 
 
