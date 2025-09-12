@@ -10,6 +10,7 @@ dependencies = [
     "autoflake>=2.3.1",
     "fastapi>=0.116.1",
     "fastapi-cache2[redis]>=0.2.2",
+    "fastapi-versioning>=0.10.0",
     "faststream[rabbit]>=0.5.48",
     "flake8>=7.3.0",
     "itsdangerous>=2.2.0",
