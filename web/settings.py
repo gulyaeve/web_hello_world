@@ -25,7 +25,7 @@ class Settings(BaseSettings):
 
     @property
     def redis_url(self):
-        return f"redis://{self.RABBITMQ_HOST}:{self.REDIS_PORT}"
+        return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}"
 
     # RabbitMQ parameters
     RABBITMQ_HOST: str
