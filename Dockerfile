@@ -19,5 +19,6 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --locked
 
 # RUN uv add gunicorn
+RUN chmod +x /app/docker/*.sh
 
 ENTRYPOINT [ "gunicorn", "web.app:app", "--workers", "4", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind=0.0.0.0:8000" ]
