@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from fastapi import Depends, FastAPI
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
+from fastapi.middleware.cors import CORSMiddleware
 from sqladmin import Admin
 
 from web.admin.views import UsersAdmin
@@ -10,6 +11,7 @@ from web.auth.scheme import get_bearer_token
 from web.users.router import router as users_router
 from web.courses.router import router as courses_router
 from web.images.router import router as images_router
+from web.pages.router import router as pages_router
 from web.database import engine
 from web.settings import settings
 from random import randint
@@ -34,6 +36,21 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(users_router)
 app.include_router(courses_router)
 app.include_router(images_router)
+app.include_router(pages_router)
+
+
+origins = [
+    "http://localhost"
+]
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")

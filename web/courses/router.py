@@ -58,6 +58,14 @@ async def del_course(ids: Annotated[List[int], Query(description="Идентиф
     return await CoursesDAO.del_by_id(ids)
 
 
+@router.get("")
+async def get_all_courses_info() -> Sequence[CourseSchema]:
+    """
+    Получить информацию о курсах
+    """
+    return await CoursesDAO.find_all()    
+
+
 @router.get("/{id}")
 async def get_course_info(id: int) -> CourseSchema:
     """Получить информацию о курсе

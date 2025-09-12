@@ -41,7 +41,11 @@ class CourseLectorsDAO(BaseDAO):
     async def get_courses_by_lector(cls, lector_id: int):
         async with async_session_maker() as session:
             # Не совсем подходит под запрос, но выдаёт нужные курсы
-            lector = select(UserModel.id, UserModel.name, UserModel.surname).where(UserModel.id == lector_id).cte("lector")
+            lector = select(
+                UserModel.id, UserModel.name, UserModel.surname
+                ).where(
+                    UserModel.id == lector_id
+                ).cte("lector")
             courses = select(CourseLectors).where(
                 CourseLectors.user_id == lector.c.id
             )
